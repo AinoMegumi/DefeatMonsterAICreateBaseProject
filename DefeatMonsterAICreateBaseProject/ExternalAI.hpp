@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Parameter.hpp"
 #include <array>
+#include <random>
 
 #ifdef MAKE_PARTNER_AI
 enum class AIBattleStyle : unsigned int { AttackMain = 0, Balance = 1, CureMain = 2 };
