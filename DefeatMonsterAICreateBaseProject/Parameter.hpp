@@ -29,4 +29,34 @@ public:
 	std::vector<SkillA> AbleToUseAttackMagic;
 	std::vector<SkillA> AbleToUseSingleCureMagic;
 	std::vector<SkillA> AbleToUseRangeCureMagic;
+	int GetMaxDamageReceived(const Parameter& Attacker) const {
+		return std::max(0, (Attacker.Physical.AttackParam - (this->Physical.DefenceParam)).Get() * 17 / 32);
+	}
+	int GetMaxDamageReceived(const Parameter& Attacker, const SkillA& AttackSkill) const {
+		return std::max(0, static_cast<int>(
+			(static_cast<double>(Attacker.Magic.AttackParam.Get() + AttackSkill.BasePower) * Attacker.Damage.GetAttackAdvantage(AttackSkill.SkillElement)) * this->Damage.GetCrashAdvantage(AttackSkill.SkillElement)
+			- (static_cast<double>(this->Magic.DefenceParam.Get()))
+			) * 17 / 32
+		);
+	}
+	int GetMiddleDamageReceived(const Parameter& Attacker) const {
+		return std::max(0, (Attacker.Physical.AttackParam - (this->Physical.DefenceParam)).Get() / 2);
+	}
+	int GetMiddleDamageReceived(const Parameter& Attacker, const SkillA& AttackSkill) const {
+		return std::max(0, static_cast<int>(
+			(static_cast<double>(Attacker.Magic.AttackParam.Get() + AttackSkill.BasePower) * Attacker.Damage.GetAttackAdvantage(AttackSkill.SkillElement)) * this->Damage.GetCrashAdvantage(AttackSkill.SkillElement)
+			- (static_cast<double>(this->Magic.DefenceParam.Get()))
+			) / 2
+		);
+	}
+	int GetMinDamageReceived(const Parameter& Attacker) const {
+		return std::max(0, (Attacker.Physical.AttackParam - (this->Physical.DefenceParam)).Get() * 15 / 32);
+	}
+	int GetMinDamageReceived(const Parameter& Attacker, const SkillA& AttackSkill) const {
+		return std::max(0, static_cast<int>(
+			(static_cast<double>(Attacker.Magic.AttackParam.Get() + AttackSkill.BasePower) * Attacker.Damage.GetAttackAdvantage(AttackSkill.SkillElement)) * this->Damage.GetCrashAdvantage(AttackSkill.SkillElement)
+			- (static_cast<double>(this->Magic.DefenceParam.Get()))
+			) * 15 / 32
+		);
+	}
 };
